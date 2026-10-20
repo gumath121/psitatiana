@@ -178,9 +178,22 @@
     /* APRESENTAÇÃO */
 
     .hero {
-      padding: 64px 0 80px;
-      overflow: hidden;
-    }
+  position: relative;
+  isolation: isolate;
+  padding: 64px 0 80px;
+  background-image:
+    linear-gradient(
+      90deg,
+      rgba(248, 246, 241, 0.94) 0%,
+      rgba(248, 246, 241, 0.86) 48%,
+      rgba(248, 246, 241, 0.70) 100%
+    ),
+    url("fachada.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
 
     .hero-grid {
       display: grid;
