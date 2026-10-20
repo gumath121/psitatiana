@@ -381,7 +381,7 @@
       color: #d9e0d6;
     }
 
-    /* SOBRE */
+    /* SOBRE — TEXTO E ASSINATURA */
 
     .section {
       padding: 105px 0;
@@ -389,50 +389,66 @@
 
     .about-grid {
       display: grid;
-      grid-template-columns: .85fr 1.15fr;
+      grid-template-columns: 1fr;
       align-items: center;
-      gap: clamp(45px, 8vw, 110px);
-    }
-
-    .about-photo-wrap {
-      position: relative;
-      padding: 0 0 18px 18px;
-    }
-
-    .about-photo-wrap::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 70%;
-      height: 70%;
-      background: var(--sage-light);
-    }
-
-    .about-photo {
-      position: relative;
-      width: 100%;
-      height: 480px;
-      object-fit: cover;
-      object-position: center 30%;
-      background: #e8e4dc;
+      max-width: 850px;
+      margin: 0 auto;
     }
 
     .about-copy h2 {
+      max-width: 720px;
       margin: 22px 0;
     }
 
     .about-copy p {
       font-size: 14px;
       margin-bottom: 18px;
-      line-height: 1.95;
+      line-height: 2;
     }
 
+    /* ASSINATURA COM FOTO CIRCULAR */
+
     .signature {
-      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--line);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+    }
+
+    .about-author-photo {
+      width: 62px;
+      height: 62px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      object-fit: cover;
+      object-position: center 28%;
+      border: 2px solid var(--white);
+      box-shadow: 0 0 0 1px var(--line);
+    }
+
+    .about-author-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .about-author-name {
       font-family: 'Playfair Display', Georgia, serif;
-      font-size: 25px;
+      font-size: 19px;
+      font-weight: 400;
       color: var(--sage-dark);
+    }
+
+    .about-author-role {
+      font-size: 10px;
+      letter-spacing: 1.3px;
+      text-transform: uppercase;
+      color: var(--muted);
     }
 
     /* ATENDIMENTO */
@@ -659,11 +675,7 @@
       fill: currentColor;
     }
 
-    /* =========================================
-       ANIMAÇÕES AO ROLAR A PÁGINA
-    ========================================= */
-
-    /* Elementos surgem suavemente de baixo para cima */
+    /* ANIMAÇÕES AO ROLAR A PÁGINA */
 
     .reveal {
       opacity: 0;
@@ -678,8 +690,6 @@
       transform: translateY(0);
     }
 
-    /* Fotografias com movimento mais delicado */
-
     .reveal-photo {
       opacity: 0;
       transform: translateY(18px) scale(.985);
@@ -693,13 +703,11 @@
       transform: translateY(0) scale(1);
     }
 
-    /* Intervalo progressivo entre os cards */
-
     .service-card.reveal {
       transition-delay: var(--reveal-delay, 0ms);
     }
 
-    /* Acessibilidade: reduz movimento quando solicitado */
+    /* ACESSIBILIDADE */
 
     @media (prefers-reduced-motion: reduce) {
       html {
@@ -723,7 +731,7 @@
       }
     }
 
-    /* CELULAR E TABLET */
+    /* TABLET */
 
     @media (max-width: 850px) {
       .nav {
@@ -768,18 +776,12 @@
         padding: 75px 0;
       }
 
-      .about-grid {
-        gap: 40px;
-      }
-
-      .about-photo {
-        height: 410px;
-      }
-
       .service-grid {
         grid-template-columns: repeat(2, 1fr);
       }
     }
+
+    /* CELULAR */
 
     @media (max-width: 600px) {
       .container {
@@ -875,19 +877,40 @@
         margin-bottom: 8px;
       }
 
-      .about-grid,
-      .clinic-grid {
+      /* SOBRE NO CELULAR: TEXTO E FOTO PEQUENA */
+
+      .about-grid {
         grid-template-columns: 1fr;
-        gap: 35px;
+        gap: 0;
       }
 
-      .about-photo {
-        height: 430px;
+      .about-copy h2 {
+        font-size: 37px;
       }
 
-      .about-copy h2,
-      .clinic-copy h2 {
-        font-size: 39px;
+      .about-copy p {
+        font-size: 14px;
+        line-height: 1.9;
+      }
+
+      .signature {
+        margin-top: 25px;
+        padding-top: 20px;
+        gap: 13px;
+      }
+
+      .about-author-photo {
+        width: 56px;
+        height: 56px;
+      }
+
+      .about-author-name {
+        font-size: 18px;
+      }
+
+      .about-author-role {
+        font-size: 9px;
+        letter-spacing: 1px;
       }
 
       .service-grid {
@@ -898,6 +921,15 @@
       .service-card {
         min-height: auto;
         padding: 27px 24px;
+      }
+
+      .clinic-grid {
+        grid-template-columns: 1fr;
+        gap: 35px;
+      }
+
+      .clinic-copy h2 {
+        font-size: 39px;
       }
 
       .clinic-photo {
@@ -1085,19 +1117,10 @@
       </div>
     </section>
 
-    <!-- SOBRE -->
+    <!-- SOBRE MIM: TEXTO E ASSINATURA -->
 
     <section class="section" id="sobre">
       <div class="container about-grid">
-
-        <div class="about-photo-wrap">
-          <img
-            class="about-photo"
-            src="tatiana.jpg"
-            alt="Retrato da Dra. Tatiana"
-            loading="lazy"
-          >
-        </div>
 
         <div class="about-copy">
           <span class="eyebrow">Um pouco sobre mim</span>
@@ -1121,7 +1144,19 @@
             sobre como funciona o acompanhamento psicológico.
           </p>
 
-          <div class="signature">Dra. Tatiana</div>
+          <div class="signature about-author">
+            <img
+              class="about-author-photo"
+              src="tatiana.jpg"
+              alt="Dra. Tatiana Almeida"
+              loading="lazy"
+            >
+
+            <div class="about-author-info">
+              <span class="about-author-name">Dra. Tatiana Almeida</span>
+              <span class="about-author-role">Psicologia · Escuta · Acolhimento</span>
+            </div>
+          </div>
         </div>
 
       </div>
@@ -1325,13 +1360,13 @@
     document.getElementById("year").textContent =
       new Date().getFullYear();
 
-    // Identifica os elementos que terão animação
+    // Elementos que aparecem suavemente durante a rolagem
     const revealElements = document.querySelectorAll(
       ".hero-copy, " +
       ".photo-caption, " +
       ".value-item, " +
-      ".about-photo-wrap, " +
       ".about-copy, " +
+      ".about-author, " +
       ".section-heading, " +
       ".service-card, " +
       ".clinic-copy, " +
@@ -1339,7 +1374,6 @@
       ".contact-inner"
     );
 
-    // Prepara os elementos para aparecerem durante a rolagem
     revealElements.forEach((element) => {
       element.classList.add("reveal");
     });
@@ -1354,23 +1388,23 @@
       }
     );
 
-    // Os itens de valores também aparecem em sequência
+    // Os valores também aparecem em sequência
     document.querySelectorAll(".value-item").forEach(
       (item, index) => {
         item.style.transitionDelay = `${index * 120}ms`;
       }
     );
 
-    // Prepara as fotos para uma animação suave
+    // Animação das fotografias
     const revealPhotos = document.querySelectorAll(
-      ".hero-photo, .about-photo, .clinic-photo"
+      ".hero-photo, .about-author-photo, .clinic-photo"
     );
 
     revealPhotos.forEach((photo) => {
       photo.classList.add("reveal-photo");
     });
 
-    // Observa quando cada elemento entra na área visível
+    // Observa quando os elementos entram na área visível
     if ("IntersectionObserver" in window) {
       const observer = new IntersectionObserver(
         (entries, currentObserver) => {
@@ -1378,7 +1412,7 @@
             if (entry.isIntersecting) {
               entry.target.classList.add("is-visible");
 
-              // Anima somente uma vez por carregamento
+              // Cada elemento anima somente uma vez
               currentObserver.unobserve(entry.target);
             }
           });
