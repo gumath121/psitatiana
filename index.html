@@ -466,6 +466,18 @@
       padding: 32px 27px;
       min-height: 225px;
       border: 1px solid rgba(119, 134, 117, .14);
+      transition:
+        box-shadow .3s ease,
+        border-color .3s ease,
+        transform .3s ease;
+    }
+
+    /* HOVER DISCRETO NOS CARDS */
+
+    .service-card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(78, 98, 81, .35);
+      box-shadow: 0 14px 32px rgba(48, 54, 44, .07);
     }
 
     .service-number {
@@ -506,6 +518,11 @@
     .clinic-photo-wrap {
       background: var(--sage-light);
       padding: 14px;
+      transition: box-shadow .3s ease;
+    }
+
+    .clinic-photo-wrap:hover {
+      box-shadow: 0 15px 35px rgba(48, 54, 44, .08);
     }
 
     .clinic-photo {
@@ -642,6 +659,70 @@
       fill: currentColor;
     }
 
+    /* =========================================
+       ANIMAÇÕES AO ROLAR A PÁGINA
+    ========================================= */
+
+    /* Elementos surgem suavemente de baixo para cima */
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition:
+        opacity .75s ease,
+        transform .75s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .reveal.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* Fotografias com movimento mais delicado */
+
+    .reveal-photo {
+      opacity: 0;
+      transform: translateY(18px) scale(.985);
+      transition:
+        opacity .9s ease,
+        transform .9s cubic-bezier(.22, 1, .36, 1);
+    }
+
+    .reveal-photo.is-visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Intervalo progressivo entre os cards */
+
+    .service-card.reveal {
+      transition-delay: var(--reveal-delay, 0ms);
+    }
+
+    /* Acessibilidade: reduz movimento quando solicitado */
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      .reveal,
+      .reveal-photo,
+      .reveal.is-visible,
+      .reveal-photo.is-visible {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .service-card,
+      .clinic-photo-wrap,
+      .btn,
+      .whatsapp-float {
+        transition: none;
+      }
+    }
+
     /* CELULAR E TABLET */
 
     @media (max-width: 850px) {
@@ -725,8 +806,8 @@
         background-position: center;
         background-image:
           linear-gradient(
-            rgba(248, 246, 241, 0.88),
-            rgba(248, 246, 241, 0.92)
+            rgba(248, 246, 241, .88),
+            rgba(248, 246, 241, .92)
           ),
           url("fachada.jpg");
       }
@@ -864,16 +945,6 @@
         height: 52px;
       }
     }
-
-    @media (prefers-reduced-motion: reduce) {
-      html {
-        scroll-behavior: auto;
-      }
-
-      *, *::before, *::after {
-        transition-duration: .01ms !important;
-      }
-    }
   </style>
 </head>
 
@@ -960,14 +1031,13 @@
       </div>
     </section>
 
-    <!-- FAIXA DE VALORES COM ÍCONES -->
+    <!-- FAIXA DE VALORES -->
 
     <section class="values" aria-label="Valores do atendimento">
       <div class="container values-grid">
 
         <div class="value-item">
           <div class="value-icon" aria-hidden="true">
-            <!-- Ícone de escuta: ouvido -->
             <svg viewBox="0 0 24 24">
               <path d="M7 9a5 5 0 0 1 10 0c0 3-2 4-3.5 5.5-1 1-1 2-1 2.5a2.5 2.5 0 0 1-5 0"/>
               <path d="M10 9a2 2 0 0 1 4 0c0 1.5-2 2-2 3.5"/>
@@ -983,7 +1053,6 @@
 
         <div class="value-item">
           <div class="value-icon" aria-hidden="true">
-            <!-- Ícone de acolhimento: coração -->
             <svg viewBox="0 0 24 24">
               <path d="M20.8 8.8c0 5.1-8.8 10-8.8 10s-8.8-4.9-8.8-10A4.8 4.8 0 0 1 12 6.4a4.8 4.8 0 0 1 8.8 2.4Z"/>
               <path d="M8.5 11.5h2l1.2-2.2 1.6 4 1.1-1.8h1.6"/>
@@ -998,7 +1067,6 @@
 
         <div class="value-item">
           <div class="value-icon" aria-hidden="true">
-            <!-- Ícone de autoconhecimento: flor -->
             <svg viewBox="0 0 24 24">
               <circle cx="12" cy="12" r="2.2"/>
               <path d="M12 9.8C9.2 7.4 9.7 4 12 3c2.3 1 2.8 4.4 0 6.8Z"/>
@@ -1136,11 +1204,11 @@
 
         <div class="clinic-photo-wrap">
           <img
-  class="clinic-photo"
-  src="fachada1.jpg"
-  alt="Espaço de atendimento da Dra. Tatiana"
-  loading="lazy"
->
+            class="clinic-photo"
+            src="fachada1.jpg"
+            alt="Espaço de atendimento da Dra. Tatiana"
+            loading="lazy"
+          >
         </div>
 
       </div>
@@ -1250,9 +1318,91 @@
     </svg>
   </a>
 
+  <!-- JAVASCRIPT: ANIMAÇÕES AO ROLAR -->
+
   <script>
+    // Atualiza automaticamente o ano do rodapé
     document.getElementById("year").textContent =
       new Date().getFullYear();
+
+    // Identifica os elementos que terão animação
+    const revealElements = document.querySelectorAll(
+      ".hero-copy, " +
+      ".photo-caption, " +
+      ".value-item, " +
+      ".about-photo-wrap, " +
+      ".about-copy, " +
+      ".section-heading, " +
+      ".service-card, " +
+      ".clinic-copy, " +
+      ".clinic-photo-wrap, " +
+      ".contact-inner"
+    );
+
+    // Prepara os elementos para aparecerem durante a rolagem
+    revealElements.forEach((element) => {
+      element.classList.add("reveal");
+    });
+
+    // Os cards aparecem em sequência
+    document.querySelectorAll(".service-card").forEach(
+      (card, index) => {
+        card.style.setProperty(
+          "--reveal-delay",
+          `${index * 130}ms`
+        );
+      }
+    );
+
+    // Os itens de valores também aparecem em sequência
+    document.querySelectorAll(".value-item").forEach(
+      (item, index) => {
+        item.style.transitionDelay = `${index * 120}ms`;
+      }
+    );
+
+    // Prepara as fotos para uma animação suave
+    const revealPhotos = document.querySelectorAll(
+      ".hero-photo, .about-photo, .clinic-photo"
+    );
+
+    revealPhotos.forEach((photo) => {
+      photo.classList.add("reveal-photo");
+    });
+
+    // Observa quando cada elemento entra na área visível
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver(
+        (entries, currentObserver) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+
+              // Anima somente uma vez por carregamento
+              currentObserver.unobserve(entry.target);
+            }
+          });
+        },
+        {
+          threshold: 0.12,
+          rootMargin: "0px 0px -35px 0px"
+        }
+      );
+
+      document.querySelectorAll(
+        ".reveal, .reveal-photo"
+      ).forEach((element) => {
+        observer.observe(element);
+      });
+
+    } else {
+      // Alternativa para navegadores antigos
+      document.querySelectorAll(
+        ".reveal, .reveal-photo"
+      ).forEach((element) => {
+        element.classList.add("is-visible");
+      });
+    }
   </script>
 
 </body>
